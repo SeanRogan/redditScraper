@@ -38,7 +38,15 @@ To use the scraper youll need to sign up for a reddit account here https://reddi
 The scraper is made to work with a postgresql database. If you have a database simply add your connection string in the private.py file. the database connection string format for postgresql is as follows:  
 ### postgresql://username:password@hostname:port/dbname 
 
+#Configuring the scraper
+The webscraper has a settings.py file which holds configuration info. it looks like this 
+```
+SUBREDDITS = ["wall street", "python"]
+TABLE_NAME = "reddit_posts"
+```
+In this file you can change the Subreddits you want to be scraped. You can also change the name of the table your data will be saved under in the database you connect to. 
+
 # How to set up for your first scrape
-  
+Once you've installed everything and your database is up and waiting for inserts, you can run the program with ```python run_reddit_scraper.py``` and it will cycle through the subbreddits found in the settings.py file, and scrape the top 100 newest posts and its associated comments and deposit the data into the database. 
 # Happy Scraping 🎅🏻
 
