@@ -1,0 +1,1 @@
+SUBREDDITS = ["wall street", "python"]
