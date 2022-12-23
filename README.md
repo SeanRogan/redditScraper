@@ -1,10 +1,10 @@
 # redditScraper
 A service to webscrape reddit posts and add them to a database for later data analysis
 
-## Pre-Requisites
+# Pre-Requisites
 The service is built with python 3.10, and uses a PostgreSQL database of the latest stable version.
 It also requires several python packages as dependencies.
-## Install
+# Install
 to install and use the service, first create a directory to clone the repository into
 ```
 mkdir reddit_scraper_directory
