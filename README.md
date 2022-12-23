@@ -38,7 +38,7 @@ To use the scraper youll need to sign up for a reddit account here https://reddi
 The scraper is made to work with a postgresql database. If you have a database simply add your connection string in the private.py file. the database connection string format for postgresql is as follows:  
 ### postgresql://username:password@hostname:port/dbname 
 
-#Configuring the scraper
+# Configuration
 The webscraper has a settings.py file which holds configuration info. it looks like this 
 ```
 SUBREDDITS = ["wall street", "python"]
