@@ -2,7 +2,6 @@ from constants import private
 import json
 import praw
 import logging
-
 from RedditPost import RedditPost
 
 # set up logging as advised per the praw documentation
@@ -36,23 +35,23 @@ def scrape_subreddit(self, subreddit_path):
     list_of_posts = dict()
     subreddit_to_scrape = redditClient.subreddit(subreddit_path)
     # loop through top 100 new posts
+    #todo remove limit in production,just for tests to be smaller
     for post in subreddit_to_scrape.new(limit=1):
         # save post text
         post_text = post.selftext
-        # get comments from submission object
+        # create a dict to hold the comments
+        comments = dict()
+        # we can get comments as a commentForest iterable object from submission object
         submission = redditClient.submission(post)
         # change comment sort order to sort by newest posts first
         submission.comment_sort = 'new'
         # replace_more method call ensures comment trees are complete
         # when a 'see more comments' button would have lead to more hidden comments
         submission.comments.replace_more()
-        # create a dict to hold the comments
-        comments = dict()
         # get a flattened list of all comment trees
-        list_of_comments = submission.comments.list()
-        # loop through the comments and add them to the dictionary
-        for comment in list_of_comments:
-            comments[comment.id] = comment.body
+        # loop through the comments ...
+        for comment in submission.comments.list():
+            comments[comment.id] = comment.body     # and add them to the dictionary
         # create a post object with the post title, text, and a dictionary of all the comments
         # add it to the list of posts dictionary with the title as key
         list_of_posts[post.title] = json.dumps(RedditPost(post.title, post_text, comments))
