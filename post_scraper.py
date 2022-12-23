@@ -36,13 +36,15 @@ def scrape_subreddit(self, subreddit_path):
     list_of_posts = dict()
     subreddit_to_scrape = redditClient.subreddit(subreddit_path)
     # loop through top 100 new posts
-    for post in subreddit_to_scrape.new():
+    for post in subreddit_to_scrape.new(limit=1):
         # save post text
         post_text = post.selftext
         # get comments from submission object
         submission = redditClient.submission(post)
         # change comment sort order to sort by newest posts first
         submission.comment_sort = 'new'
+        # replace_more method call ensures comment trees are complete
+        # when a 'see more comments' button would have lead to more hidden comments
         submission.comments.replace_more()
         # create a dict to hold the comments
         comments = dict()
