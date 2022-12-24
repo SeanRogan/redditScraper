@@ -10,4 +10,4 @@ table = db[settings.TABLE_NAME]
 def store_in_database(self):
     # store data passed as an argument to the database,
     # many rows at a time to facilitate large object transfers.
-    table.insert_many(self)
+    table.insert(self)

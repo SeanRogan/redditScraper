@@ -31,7 +31,7 @@ def scrape_subreddit(self):
     list_of_posts = dict()
     subreddit_to_scrape = redditClient.subreddit(self)
     # loop through top 100 new posts
-    for post in subreddit_to_scrape.new(limit=1):
+    for post in subreddit_to_scrape.new(limit=2):
         # save post text
         post_text = post.selftext
         # create a dict to hold the comments
@@ -49,7 +49,6 @@ def scrape_subreddit(self):
             comments[comment.id] = comment.body     # and add them to the dictionary
         # create a post object with the post title, text, and a dictionary of all the comments
         # add it to the list of posts dictionary with the title as key
-        pprint.pprint(vars(post))
         list_of_posts[post.title] = json.dumps(dict({"Title": post.title, "Post": post_text, "Comments": comments}))
         # return a dictionary with the format: post_title: RedditPost
     return list_of_posts
