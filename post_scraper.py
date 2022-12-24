@@ -26,18 +26,12 @@ redditClient = praw.Reddit(client_id=private.CLIENT_ID,
                            )
 
 
-# todo need to make a database service. need to make sure the json object is
-#  coming out right in ths scrape subreddit func, need a class to iterate through
-#  a list of subreddits and call scrape on each one and store the resulting lists
-#  in the db with the database service
-
 # the subreddit_path should be the url path element to the sub you want to scrape (/r wall street bets would be "wallstreetbets")
 def scrape_subreddit(self):
     list_of_posts = dict()
     subreddit_to_scrape = redditClient.subreddit(self)
     # loop through top 100 new posts
-    #todo remove limit in production,just for tests to be smaller
-    for post in subreddit_to_scrape.new(limit=100):
+    for post in subreddit_to_scrape.new(limit=1):
         # save post text
         post_text = post.selftext
         # create a dict to hold the comments
