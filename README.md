@@ -47,6 +47,6 @@ TABLE_NAME = "reddit_posts"
 In this file you can change the Subreddits you want to be scraped. Use the url element after ```/r/``` in the subreddit url. For example, if you want to scrape ```https://www.reddit.com/r/learnprogramming``` You would add "learnprogramming" to the SUBREDDITS list. You can also change the name of the table your data will be saved under in the database you connect to. 
 
 # How to set up for your first scrape
-Once you've installed everything and your database is up and waiting for inserts, you can run the program with ```python run_reddit_scraper.py``` and it will cycle through the subbreddits found in the settings.py file, and scrape the top 100 newest posts and its associated comments and deposit the data into the database. 
+Once you've installed everything and your database is up and waiting for inserts, ensure there is at least one valid subreddit string in the SUBREDDITS list in settings.py. Once that is confirmed, and you have your reddit api credentials in the private.py file, you should be ready to begin! You can run the program with ```python run_reddit_scraper.py``` and it will cycle through the subbreddits found in the settings.py file, and scrape the top 100 newest posts and its associated comments and deposit the data into the database. 
 # Happy Scraping 🎅🏻
 
