@@ -4,7 +4,7 @@ from constants import private
 import json
 import praw
 import logging
-
+from datetime import datetime
 # set up logging as advised per the praw documentation
 handler = logging.StreamHandler()
 handler.setLevel(logging.DEBUG)
@@ -31,7 +31,7 @@ def scrape_subreddit(self):
     list_of_posts = dict()
     subreddit_to_scrape = redditClient.subreddit(self)
     # loop through top 100 new posts
-    for post in subreddit_to_scrape.new(limit=2):
+    for post in subreddit_to_scrape.new(limit=1):
         # save post text
         post_text = post.selftext
         # create a dict to hold the comments
@@ -40,17 +40,22 @@ def scrape_subreddit(self):
         submission = redditClient.submission(post)
         # change comment sort order to sort by newest posts first
         submission.comment_sort = 'new'
+        # get the post date timestamp
+        timestamp = submission.created_utc
+        # convert the unix timestamp to a utc date/time object
+        date_time = datetime.utcfromtimestamp(timestamp)
+        # format the date/time object
+        date_posted = date_time.strftime('%Y-%m-%d-%H:%M:%S')
         # replace_more method call ensures comment trees are complete
         # when a 'see more comments' button would have lead to more hidden comments
         submission.comments.replace_more()
         # get a flattened list of all comment trees
         # loop through the comments ...
         for comment in submission.comments.list():
-            comments[comment.id] = comment.body     # and add them to the dictionary
-        # create a post object with the post title, text, and a dictionary of all the comments
+            comments[comment.id] = comment.body
+        # create a post object with the post title, text, the date the post was created and a dictionary of all the comments
         # add it to the list of posts dictionary with the title as key
-        list_of_posts[post.title] = json.dumps(dict({"Title": post.title, "Post": post_text, "Comments": comments}))
-        # return a dictionary with the format: post_title: RedditPost
+        list_of_posts[post.title] = dict({"title": post.title, "date_posted": date_posted, "post": post_text, "comments": comments})
     return list_of_posts
 
 
